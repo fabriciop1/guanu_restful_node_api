@@ -1,0 +1,12 @@
+version: '3.4'
+
+services:
+  db:
+    image: mongo
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_DATABASE: freelancerDB
+    ports:
+      - 27017:27017
+
+
