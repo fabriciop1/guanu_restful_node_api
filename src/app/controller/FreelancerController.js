@@ -18,16 +18,18 @@ module.exports = {
 
   async insert(req, res) {
     let { email } = req.body
+
     try {
       if (await Freelancer.findOne({ email })) {
         return res.status(400).send({Error: 'User already exists.'})
       } 
-
+      
       let freelancer = await Freelancer.create(req.body)
       freelancer.password = undefined
-
+      
       return res.json({freelancer, token: AUTHCONTROLLER.generateToken({id: freelancer.id})})
     } catch (err) {
+      console.log(err)
       return res.status(400).send({Error: 'Registration failed.' })
     }
   },

@@ -1,16 +1,24 @@
 "use strict"
 
-const MONGOOSE = require('../database')
+const MONGOOSE = require('../../database')
 const PAGINATE = require ("mongoose-paginate")
 const BCRYPT = require('bcryptjs')
 
 let freelancerSchema = new MONGOOSE.Schema({
-    name: {
+    birthday: {
+        type: Date,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    }, 
+    service: {
         type: String,
         required: true
     },
-    age: {
-        type: Number,
+    name: {
+        type: String,
         required: true
     },
     email: {
@@ -32,10 +40,14 @@ let freelancerSchema = new MONGOOSE.Schema({
         type: String,
         required: false
     },
-    description: {
+    passwordResetToken: {
         type: String,
-        required: true
-    }, 
+        select: false
+    },
+    passwordResetExpires: {
+        type: Date,
+        select: false
+    },
     createdAt: {
         type: Date,
         default: Date.now
@@ -45,9 +57,9 @@ let freelancerSchema = new MONGOOSE.Schema({
 freelancerSchema.pre('save', async function(next) {
     let hash = await BCRYPT.hash(this.password, 10)
     this.password = hash
-
+  
     next()
-})
+  })
 
 freelancerSchema.plugin(PAGINATE)
 
