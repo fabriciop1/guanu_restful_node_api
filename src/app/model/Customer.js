@@ -1,54 +1,61 @@
-"use strict"
+'use strict';
 
-const MONGOOSE = require('../../database')
-const BCRYPT = require('bcryptjs')
+const MONGOOSE = require('../../database');
+const BCRYPT = require('bcryptjs');
 
 let customerSchema = new MONGOOSE.Schema({
   address: {
     type: String,
-    required: true
-  }, 
+    required: true,
+  },
   birthday: {
     type: Date,
-    required: true
+    required: true,
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
     required: true,
     unique: true,
-    lowercase: true
+    lowercase: true,
   },
   password: {
     type: String,
     required: true,
-    select: false
+    select: false,
   },
   phone: {
     type: String,
-    required: true
+    required: true,
   },
   profilePictureURL: {
     type: String,
-    required: false
+    required: false,
   },
   passwordResetToken: {
     type: String,
-    select: false
+    select: false,
   },
   passwordResetExpires: {
     type: Date,
-    select: false
+    select: false,
   },
   createdAt: {
     type: Date,
-    default: Date.now
-  }
-})
+    default: Date.now,
+  },
+});
 
-let customer = MONGOOSE.model("Customer", customerSchema)
+customerSchema.pre('save', async function (next) {
+  let hash = await BCRYPT.hash(this.password, 10);
+  this.password = hash;
 
-module.exports = customer
+  next();
+});
+
+let customer = MONGOOSE.model('Customer', customerSchema);
+
+module.exports = customer;
