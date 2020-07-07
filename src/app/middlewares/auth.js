@@ -21,7 +21,7 @@ module.exports = (req, res, next) => {
   JWT.verify(token, AUTHCONFIG.secret, (err, decoded) => {
     if (err) return res.status(401).send({ error: 'Invalid token.' });
 
-    req.freelancerId = decoded.id;
+    req.userId = decoded.id;
     return next();
   });
 };

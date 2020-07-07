@@ -4,24 +4,24 @@ const EXPRESS = require('express');
 const ROUTES = EXPRESS.Router();
 
 let authMiddleware = require('./app/middlewares/auth');
-let FreelancerController = require('./app/controller/FreelancerController');
-let AuthController = require('./app/controller/AuthController');
-let CustomerController = require('./app/controller/CustomerController')
+let freelancerController = require('./app/controller/FreelancerController');
+let authController = require('./app/controller/AuthController');
+let userController = require('./app/controller/UserController')
 
-ROUTES.get('/freelancers', FreelancerController.restoreAll);
-ROUTES.post('/freelancers', FreelancerController.insert);
-ROUTES.get('/freelancers/:id', authMiddleware, FreelancerController.restore);
-ROUTES.put('/freelancers/:id', authMiddleware, FreelancerController.update);
-ROUTES.delete('/freelancers/:id', authMiddleware, FreelancerController.remove);
+ROUTES.get('/freelancers', freelancerController.restoreAll);
+ROUTES.post('/freelancers', authMiddleware, freelancerController.insert);
+ROUTES.get('/freelancers/:id', authMiddleware, freelancerController.restore);
+ROUTES.put('/freelancers/:id', authMiddleware, freelancerController.update);
+ROUTES.delete('/freelancers/:id', authMiddleware, freelancerController.remove);
 
-ROUTES.post('/auth', AuthController.authenticate);
-ROUTES.post('/auth/forgot_password', AuthController.forgot_password);
-ROUTES.post('/auth/reset_password', AuthController.reset_password);
+ROUTES.post('/auth', authController.authenticate);
+ROUTES.post('/auth/forgot_password', authController.forgot_password);
+ROUTES.post('/auth/reset_password', authController.reset_password);
 
-ROUTES.get('/customers', CustomerController.restoreAll);
-ROUTES.get('/customers/:id', authMiddleware, CustomerController.restore);
-ROUTES.post('/customers', CustomerController.insert);
-ROUTES.put('/customers/:id', authMiddleware, CustomerController.update);
-ROUTES.delete('/customers/:id', authMiddleware, CustomerController.delete);
+ROUTES.get('/users', userController.restoreAll);
+ROUTES.get('/users/:id', authMiddleware, userController.restore);
+ROUTES.post('/users', userController.insert);
+ROUTES.put('/users/:id', authMiddleware, userController.update);
+ROUTES.delete('/users/:id', authMiddleware, userController.remove);
 
 module.exports = ROUTES;

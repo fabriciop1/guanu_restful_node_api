@@ -1,19 +1,27 @@
 'use strict';
 
 const MONGOOSE = require('../../database');
+const PAGINATE = require('mongoose-paginate-v2');
 const BCRYPT = require('bcryptjs');
 
-let customerSchema = new MONGOOSE.Schema({
-  address: {
-    type: String,
-    required: true,
+let userSchema = new MONGOOSE.Schema({
+  name: {
+    firstname: {
+      type: String,
+      required: true,
+    },
+    lastname: {
+      type: String,
+      required: true,
+    }
+  },
+  cpf: {
+    type: Number,
+    unique: true,
+    require: true,
   },
   birthday: {
     type: Date,
-    required: true,
-  },
-  name: {
-    type: String,
     required: true,
   },
   email: {
@@ -28,7 +36,7 @@ let customerSchema = new MONGOOSE.Schema({
     select: false,
   },
   phone: {
-    type: String,
+    type: Number,
     required: true,
   },
   profilePictureURL: {
@@ -49,13 +57,15 @@ let customerSchema = new MONGOOSE.Schema({
   },
 });
 
-customerSchema.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
   let hash = await BCRYPT.hash(this.password, 10);
   this.password = hash;
 
   next();
 });
 
-let customer = MONGOOSE.model('Customer', customerSchema);
+userSchema.plugin(PAGINATE);
 
-module.exports = customer;
+let user = MONGOOSE.model('User', userSchema);
+
+module.exports = user;

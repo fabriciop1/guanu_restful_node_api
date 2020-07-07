@@ -6,48 +6,57 @@ const Freelancer = MONGOOSE.model('Freelancer');
 
 module.exports = {
   async restoreAll(req, res) {
-    let { page = 1 } = req.query; // paginate
-    let freelancers = await Freelancer.paginate({}, { page, limit: 10 }); // first object are filters, 10 per page
-    return res.json(freelancers);
+    try {
+      let { page = 1 } = req.query; // paginate
+      let freelancers = await Freelancer.paginate({}, { page, limit: 10, populate: 'user' }); // first object are filters, 10 per page
+      return res.json(freelancers);
+    } catch (err) {
+      console.log(err)
+      return res.status(400).send({error: "Could not restore freelancers."})
+    }
   },
 
   async restore(req, res) {
-    let freelancer = await Freelancer.findById(req.params.id);
-    return res.json(freelancer);
+    try {
+      let freelancer = await Freelancer.findById(req.params.id).populate('user');
+      return res.json(freelancer);
+    } catch (err) {
+      return res.status(400).send({Error: "Could not restore freelancer."})
+    }
   },
 
   async insert(req, res) {
-    let { email } = req.body;
-
     try {
-      if (await Freelancer.findOne({ email })) {
-        return res.status(400).send({ Error: 'User already exists.' });
-      }
-
-      let freelancer = await Freelancer.create(req.body);
-      freelancer.password = undefined;
-
+      
+      let freelancer = await Freelancer.create({...req.body, user: req.userId});
+      
       return res.json({
-        freelancer,
-        token: AUTHCONTROLLER.generateToken({ id: freelancer.id }),
+        freelancer
       });
     } catch (err) {
-      console.log(err);
       return res.status(400).send({ Error: 'Registration failed.' });
     }
   },
 
   async update(req, res) {
+    try {
     let freelancer = await Freelancer.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true }
-    );
+    ).populate('user');
     return res.json(freelancer);
+    } catch(err) {
+      return res.status(400).send({Error: "Could not update freelancer."})
+    }
   },
 
   async remove(req, res) {
-    await Freelancer.findByIdAndRemove(req.params.id);
-    return res.send();
+    try {
+      await Freelancer.findByIdAndRemove(req.params.id);
+      return res.send();
+    } catch(err) {
+      return res.status(400).send({Error: "Could not delete freelancer."})
+    }
   },
 };

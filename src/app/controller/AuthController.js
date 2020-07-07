@@ -6,26 +6,26 @@ const JWT = require('jsonwebtoken');
 const AUTHCONFIG = require('../../config/auth.json');
 const CRYPTO = require('crypto');
 const MAILER = require('../../modules/mailer');
-const Freelancer = MONGOOSE.model('Freelancer');
+const User = MONGOOSE.model('User');
 
 module.exports = {
   async authenticate(req, res) {
     let { email, password } = req.body;
-    let freelancer = await Freelancer.findOne({ email }).select('+password');
+    let user = await User.findOne({ email }).select('+password');
 
-    if (!freelancer) {
+    if (!user) {
       return res.status(400).send({ Error: 'User not found.' });
     }
 
-    if (!(await BCRYPT.compare(password, freelancer.password))) {
+    if (!(await BCRYPT.compare(password, user.password))) {
       return res.status(400).send({ Error: 'Invalid password.' });
     }
 
-    freelancer.password = undefined;
+    user.password = undefined;
 
     res.json({
-      freelancer,
-      token: module.exports.generateToken({ id: freelancer.id }),
+      user,
+      token: module.exports.generateToken({ id: user.id }),
     });
   },
 
@@ -33,9 +33,9 @@ module.exports = {
     let { email } = req.body;
 
     try {
-      let freelancer = await Freelancer.findOne({ email });
+      let user = await User.findOne({ email });
 
-      if (!freelancer) {
+      if (!user) {
         return res.status(400).send({ error: 'User not found.' });
       }
 
@@ -43,8 +43,8 @@ module.exports = {
       let dateNow = new Date();
       dateNow.setHours(dateNow.getHours() + 1);
 
-      await Freelancer.findByIdAndUpdate(
-        freelancer.id,
+      await User.findByIdAndUpdate(
+        user.id,
         {
           $set: {
             passwordResetToken: token,
@@ -79,29 +79,29 @@ module.exports = {
     let { email, token, password } = req.body;
 
     try {
-      let freelancer = await Freelancer.findOne({ email }).select(
+      let user = await User.findOne({ email }).select(
         '+passwordResetToken passwordResetExpires'
       );
 
-      if (!freelancer) {
+      if (!user) {
         return res.status(400).send({ error: 'User not found.' });
       }
 
-      if (token !== freelancer.passwordResetToken) {
+      if (token !== user.passwordResetToken) {
         return res.status(400).send({ error: 'Invalid token.' });
       }
 
       let now = new Date();
 
-      if (now > freelancer.passwordResetExpires) {
+      if (now > user.passwordResetExpires) {
         return res
           .status(400)
           .send({ error: 'Token expired. Generate a new one.' });
       }
 
-      freelancer.password = password;
+      user.password = password;
 
-      await freelancer.save();
+      await user.save();
 
       res.send();
     } catch (err) {
