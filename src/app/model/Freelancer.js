@@ -2,7 +2,6 @@
 
 const MONGOOSE = require('../../database');
 const PAGINATE = require('mongoose-paginate-v2');
-const BCRYPT = require('bcryptjs');
 
 let freelancerSchema = new MONGOOSE.Schema({
   description: {
@@ -26,7 +25,7 @@ let freelancerSchema = new MONGOOSE.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-  }
+  },
 });
 
 freelancerSchema.plugin(PAGINATE);

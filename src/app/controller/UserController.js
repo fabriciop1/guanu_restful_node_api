@@ -7,11 +7,11 @@ const User = MONGOOSE.model('User');
 module.exports = {
   async restoreAll(req, res) {
     try {
-    let { page = 1 } = req.query; // paginate
-    let users = await User.paginate({}, { page, limit: 10 }); // no filters, 10 per page
-    return res.json(users);
-    } catch{err} {
-      return res.status(400).send({Error: "Could not restore all users."})
+      let { page = 1 } = req.query; // paginate
+      let users = await User.paginate({}, { page, limit: 10 }); // no filters, 10 per page
+      return res.json(users);
+    } catch (err) {
+      return res.status(400).send({ Error: 'Could not restore all users.' });
     }
   },
 
@@ -19,8 +19,8 @@ module.exports = {
     try {
       let user = await User.findById(req.params.id);
       return res.json(user);
-    } catch(err) {
-      return res.status(400).send("Could not restore user.")
+    } catch (err) {
+      return res.status(400).send('Could not restore user.');
     }
   },
 
@@ -42,27 +42,25 @@ module.exports = {
     } catch (err) {
       return res.status(400).send({ Error: 'Registration failed.' });
     }
-  }, 
+  },
 
   async update(req, res) {
     try {
-      let user = await User.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true }
-      );
+      let user = await User.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
       return res.json(user);
-    } catch(err) {
-      return res.status(400).send({Error: "Failed to update user."})
+    } catch (err) {
+      return res.status(400).send({ Error: 'Failed to update user.' });
     }
   },
 
-  async remove(req,res) {
+  async remove(req, res) {
     try {
       await User.findByIdAndRemove(req.params.id);
-      return res.send()
-    } catch(err) {
-      return res.status(400).send({Error: "Could not remove user."})
+      return res.send();
+    } catch (err) {
+      return res.status(400).send({ Error: 'Could not remove user.' });
     }
-  }
-}
+  },
+};

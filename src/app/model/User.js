@@ -13,7 +13,7 @@ let userSchema = new MONGOOSE.Schema({
     lastname: {
       type: String,
       required: true,
-    }
+    },
   },
   cpf: {
     type: Number,
