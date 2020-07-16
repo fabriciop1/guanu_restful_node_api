@@ -3,6 +3,9 @@
 const MONGOOSE = require('../../database');
 const PAGINATE = require('mongoose-paginate-v2');
 const BCRYPT = require('bcryptjs');
+const FS = require('fs');
+const PATH = require('path');
+const { promisify } = require('util');
 
 let userSchema = new MONGOOSE.Schema({
   name: {
@@ -39,9 +42,10 @@ let userSchema = new MONGOOSE.Schema({
     type: Number,
     required: true,
   },
-  profilePictureURL: {
-    type: String,
-    required: false,
+  profilePicture: {
+    name: String,
+    url: String,
+    key: String,
   },
   passwordResetToken: {
     type: String,
@@ -60,7 +64,23 @@ let userSchema = new MONGOOSE.Schema({
 userSchema.pre('save', async function (next) {
   let hash = await BCRYPT.hash(this.password, 10);
   this.password = hash;
+  next();
+});
 
+userSchema.pre('remove', function (next) {
+  if (process.env.STORAGE_TYPE === 'local' && this.profilePicture.url) {
+    promisify(FS.unlink)(
+      PATH.resolve(
+        __dirname,
+        '..',
+        '..',
+        '..',
+        'tmp',
+        'uploads',
+        this.profilePicture.key
+      )
+    );
+  }
   next();
 });
 

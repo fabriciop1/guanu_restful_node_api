@@ -8,10 +8,6 @@ let freelancerSchema = new MONGOOSE.Schema({
     type: String,
     required: true,
   },
-  profilePictureURL: {
-    type: String,
-    required: true,
-  },
   services: {
     type: Array,
     required: true,
@@ -21,6 +17,7 @@ let freelancerSchema = new MONGOOSE.Schema({
     type: MONGOOSE.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
+    unique: true,
   },
   createdAt: {
     type: Date,

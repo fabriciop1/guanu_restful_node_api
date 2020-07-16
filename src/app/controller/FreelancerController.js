@@ -2,6 +2,7 @@
 
 const MONGOOSE = require('mongoose');
 const Freelancer = MONGOOSE.model('Freelancer');
+const User = MONGOOSE.model('User');
 
 module.exports = {
   async restoreAll(req, res) {
@@ -10,7 +11,7 @@ module.exports = {
       let freelancers = await Freelancer.paginate(
         {}, // filters
         { page, limit: 10, populate: 'user' } // 10 per page
-      ); 
+      );
       return res.json(freelancers);
     } catch (err) {
       console.log(err);
@@ -23,6 +24,8 @@ module.exports = {
       let freelancer = await Freelancer.findById(req.params.id).populate(
         'user'
       );
+      if (!freelancer)
+        return res.status(404).send({ Error: 'Freelancer not found.' });
       return res.json(freelancer);
     } catch (err) {
       return res.status(400).send({ Error: 'Could not restore freelancer.' });
@@ -43,6 +46,10 @@ module.exports = {
   },
 
   async insert(req, res) {
+    if (!(await User.findById(req.userId))) {
+      return res.status(400).send({ Error: 'Log in first.' });
+    }
+
     try {
       let freelancer = await Freelancer.create({
         ...req.body,
@@ -61,6 +68,8 @@ module.exports = {
         req.body,
         { new: true }
       ).populate('user');
+      if (!freelancer)
+        return res.status(404).send({ Error: 'Freelancer not found.' });
       return res.json(freelancer);
     } catch (err) {
       return res.status(400).send({ Error: 'Could not update freelancer.' });

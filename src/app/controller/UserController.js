@@ -31,7 +31,6 @@ module.exports = {
       if (await User.findOne({ email })) {
         return res.status(400).send({ Error: 'User already exists.' });
       }
-
       let user = await User.create(req.body);
       user.password = undefined;
 
@@ -57,7 +56,8 @@ module.exports = {
 
   async remove(req, res) {
     try {
-      await User.findByIdAndRemove(req.params.id);
+      let user = await User.findById(req.params.id);
+      await user.remove();
       return res.send();
     } catch (err) {
       return res.status(400).send({ Error: 'Could not remove user.' });
