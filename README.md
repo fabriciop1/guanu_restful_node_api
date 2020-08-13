@@ -34,10 +34,10 @@ Tal aplicativo visa facilitar essa interação cliente-profissional para melhor 
 
   ROTA                            |     HTTP(Método)   |      Descrição            | 
 -------------------------         | -----------------  | ---------------------     |
-/api/users                  |       GET         | Selecionar Todos        | 
-/api/users                  |       POST        | Criar Usuário           | 
-/api/users/:id              |       GET         | Selecionar Por ID       | 
-/api/users/:id              |       PUT         | Atualizar Por ID        |    
-/api/users/:id              |       DELETE      | Excluir Por ID          |
-/api/users/photo/:id        |       PUT         | Inserir Foto (opcional) |
-/api/users/photo/update/:id |       PUT         | Atualizar Foto por ID   |
+/api/users                        |       GET          | Selecionar Todos          | 
+/api/users                        |       POST         | Criar Usuário             | 
+/api/users/:id                    |       GET          | Selecionar Por ID         | 
+/api/users/:id                    |       PUT          | Atualizar Por ID          |    
+/api/users/:id                    |       DELETE       | Excluir Por ID            |
+/api/users/photo/:id              |       PUT          | Inserir Foto (opcional)   |
+/api/users/photo/update/:id       |       PUT          | Atualizar Foto por ID     |
