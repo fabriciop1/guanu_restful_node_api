@@ -14,8 +14,7 @@ Tal aplicativo visa facilitar essa interação cliente-profissional para melhor 
 - Docker (containerização de Banco de Dados);
 - Visual Studio Code
 - Mongoose;
-- JSON data (para retornar os dados);
-- ESLint & Prettier (Qualidade de código).
+- ESLint & Prettier (Formatação de código).
 
 ## Rotas
 
