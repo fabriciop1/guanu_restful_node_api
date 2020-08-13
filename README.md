@@ -1,6 +1,6 @@
 # Desenvolvimento de uma API RESTful com NodeJS + Express & MongoDB
-Back-end de aplicação para conectar usuários clientes com profissionais autônomos da cidade de Garanhuns. 
-A premissa deste aplicativo é que muitas pessoas procuram tais profissionais com frequência e por diversos motivos, como fazer uma reforma em casa.
+<p>Back-end de aplicação para conectar usuários clientes com profissionais autônomos da cidade de Garanhuns. </p>
+<p>A premissa deste aplicativo é que muitas pessoas procuram tais profissionais com frequência e por diversos motivos, como fazer uma reforma em casa.</p>
 Em geral, as pessoas tendem a recorrer a amigos, vizinhos ou parentes próximos em busca de certo profissional, como encanador ou marceneiro, por exemplo. 
 No entanto, o cliente não sabe do portfolio do profissional e de outros trabalhos já feitos pelo mesmo, bem como se é bem avaliado pela maioria de seus trabalhos.
 Tal aplicativo visa facilitar essa interação cliente-profissional para melhor avaliação antes da contratação do serviço.
