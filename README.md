@@ -21,14 +21,14 @@ Tal aplicativo visa facilitar essa interação cliente-profissional para melhor 
 
 ### Profissional
 
-  ROTA                    |     HTTP(Método)   |      Descrição        | 
-------------------------- | -----------------  | --------------------- |
-/api/freelancers                  |     GET        | Selecionar Todos       | 
-/api/freelancers                  |     POST       | Criar profissional     | 
-/api/freelancers/:id              |     GET        | Selecionar Por ID      | 
-/api/freelancers/:id              |     PUT        | Atualizar Por ID       |    
-/api/freelancers/:id              |     DELETE     | Excluir Por ID         |
-/api/freelancers/service/:service |     GET        | Selecionar por serviço |
+  ROTA                            |     HTTP(Método)   |      Descrição        | 
+-------------------------         | -----------------  | --------------------- |
+/api/freelancers                  |     GET        | Selecionar Todos          | 
+/api/freelancers                  |     POST       | Criar profissional        | 
+/api/freelancers/:id              |     GET        | Selecionar Por ID         | 
+/api/freelancers/:id              |     PUT        | Atualizar Por ID          |    
+/api/freelancers/:id              |     DELETE     | Excluir Por ID            |
+/api/freelancers/service/:service |     GET        | Selecionar por serviço    |
 
 ### Usuário
 
