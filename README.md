@@ -41,3 +41,5 @@ Tal aplicativo visa facilitar essa interação cliente-profissional para melhor 
 /api/users/:id                    |       DELETE       | Excluir Por ID            |
 /api/users/photo/:id              |       PUT          | Inserir Foto (opcional)   |
 /api/users/photo/update/:id       |       PUT          | Atualizar Foto por ID     |
+
+* As fotos têm persistência local, na própria pasta no projeto e, no futuro, terá suporte para a cloud, AmazonS3, Azure ou Google Drive.
