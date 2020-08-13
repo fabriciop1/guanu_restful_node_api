@@ -21,8 +21,8 @@ Tal aplicativo visa facilitar essa interação cliente-profissional para melhor 
 
 ### Profissional
 
-               ROTA               | HTTP(Métodos)  |        Descrição       | 
---------------------------------- | -------------- | ---------------------- | 
+  ROTA                    |     HTTP(Verbo)   |      Descrição        | 
+------------------------- | ----------------- | --------------------- |
 /api/freelancers                  |     GET        | Selecionar Todos       | 
 /api/freelancers                  |     POST       | Criar profissional     | 
 /api/freelancers/:id              |     GET        | Selecionar Por ID      | 
