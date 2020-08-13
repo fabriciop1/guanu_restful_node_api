@@ -32,8 +32,8 @@ Tal aplicativo visa facilitar essa interação cliente-profissional para melhor 
 
 ### Usuário
 
-        ROTA                    |     HTTP(Verbo)   |      Descrição        | 
-------------------------- | ----------------- | --------------------- |
+  ROTA                            |     HTTP(Método)   |      Descrição            | 
+-------------------------         | -----------------  | ---------------------     |
 /api/users                  |       GET         | Selecionar Todos        | 
 /api/users                  |       POST        | Criar Usuário           | 
 /api/users/:id              |       GET         | Selecionar Por ID       | 
